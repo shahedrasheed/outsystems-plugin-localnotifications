@@ -22,7 +22,7 @@ public class outsystems-plugin-localnotifications extends CordovaPlugin {
         return false;
     }
 
-    private void coolMethod(String message, CallbackContext callbackContext) {
+    private void setLocalNotification(String message, CallbackContext callbackContext) {
         if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {

@@ -1,28 +1,20 @@
 /********* outsystems-plugin-localnotifications.m Cordova Plugin Implementation *******/
+import Foundation
 
-#import <Cordova/CDV.h>
-
-@interface outsystems-plugin-localnotifications : CDVPlugin {
-  // Member variables go here.
-}
-
-- (void)coolMethod:(CDVInvokedUrlCommand*)command;
-@end
-
-@implementation outsystems-plugin-localnotifications
-
-- (void)coolMethod:(CDVInvokedUrlCommand*)command
-{
-    CDVPluginResult* pluginResult = nil;
-    NSString* echo = [command.arguments objectAtIndex:0];
-
-    if (echo != nil && [echo length] > 0) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+@objc(LocalNotifications)
+class LocalNotifications: CDVPlugin {
+    
+    @objc(setLocalNotification:)
+    func setLocalNotification(command: CDVInvokedUrlCommand) {
+        print("Cool method called")
+        
+        sendPluginResult(status: .ok, message: "Everything went ok", callbackId: command.callbackId)
     }
-
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    
+	//Generic function to be included in all plugins
+    func sendPluginResult(status: CDVCommandStatus, message: String = "", callbackId: String, keepCallback: Bool = false) {
+        let pluginResult = CDVPluginResult(status: status, messageAs: message)
+        pluginResult?.setKeepCallbackAs(keepCallback)
+        self.commandDelegate!.send(pluginResult, callbackId: callbackId)
+    }
 }
-
-@end
